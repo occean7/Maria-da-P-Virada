@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maria da Pá Virada | Demonstração de cardápio digital</title>
+  <meta name="description" content="Demonstração personalizada de cardápio digital para Maria da Pá Virada Bistrô. Protótipo independente, não oficial." />
+  <meta name="theme-color" content="#3a241c" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:title" content="Maria da Pá Virada | Demonstração de cardápio digital" />
+  <meta property="og:description" content="Protótipo independente criado para apresentar uma proposta de cardápio digital para o Maria da Pá Virada Bistrô." />
+  <meta property="og:image" content="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=1200&q=80" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --vinho:#4b2922;
+      --vinho-2:#5e352c;
+      --terracota:#b6744e;
+      --areia:#efe4d4;
+      --areia-2:#e6d5bf;
+      --marfim:#f8f2ea;
+      --texto:#2f241f;
+      --texto-2:#6a5a52;
+      --verde:#5d7356;
+      --branco:#ffffff;
+      --sombra:0 18px 45px rgba(34,19,15,.12);
+      --raio:22px;
+      --max:1180px;
+      --header:82px;
+      --trans:.28s ease;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;scroll-padding-top:calc(var(--header) + 14px)}
+    body{font-family:"Manrope",system-ui,sans-serif;color:var(--texto);background:var(--marfim);line-height:1.6;overflow-x:hidden}
+    img{max-width:100%;display:block}
+    a{text-decoration:none;color:inherit}
+    button,input{font:inherit}
+    ul{list-style:none}
+    .container{width:min(100% - 32px, var(--max));margin-inline:auto}
+
+    .topbar{
+      background:linear-gradient(90deg,var(--vinho),var(--terracota));
+      color:#fffaf5;
+      text-align:center;
+      padding:10px 16px;
+      font-size:.82rem;
+      font-weight:800;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+    }
+
+    header{
+      position:sticky;top:0;z-index:40;
+      backdrop-filter:blur(14px);
+      background:rgba(248,242,234,.86);
+      border-bottom:1px solid rgba(75,41,34,.08);
+    }
+    .nav{
+      min-height:var(--header);
+      display:flex;align-items:center;justify-content:space-between;gap:18px;
+    }
+    .brand{display:flex;align-items:center;gap:14px;min-width:0}
+    .brand__mark{
+      width:54px;height:54px;border-radius:50%;
+      display:grid;place-items:center;
+      color:var(--marfim);
+      background:radial-gradient(circle at 30% 30%, var(--terracota), var(--vinho));
+      box-shadow:0 8px 24px rgba(75,41,34,.18);
+      border:2px solid rgba(255,255,255,.55);
+      font-family:"Cormorant Garamond",serif;
+      font-size:1.6rem;font-weight:700;letter-spacing:.04em;
+      flex:none;
+    }
+    .brand__text b{display:block;font-size:1.15rem;color:var(--vinho);line-height:1.05}
+    .brand__text span{display:block;color:var(--texto-2);font-size:.87rem}
+    .menu{display:flex;align-items:center;gap:28px;flex-wrap:wrap;justify-content:center}
+    .menu a{font-weight:700;color:var(--texto);position:relative}
+    .menu a::after{content:"";position:absolute;left:0;bottom:-8px;width:0;height:2px;background:var(--terracota);transition:var(--trans)}
+    .menu a:hover::after{width:100%}
+    .nav__cta{display:flex;align-items:center;gap:12px}
+    .btn{
+      border:none;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:10px;
+      padding:15px 22px;border-radius:999px;font-weight:800;transition:var(--trans);white-space:nowrap
+    }
+    .btn--solid{background:var(--vinho);color:var(--branco);box-shadow:var(--sombra)}
+    .btn--solid:hover{transform:translateY(-2px);background:var(--vinho-2)}
+    .btn--light{background:rgba(255,255,255,.72);border:1px solid rgba(75,41,34,.12);color:var(--vinho)}
+    .btn--gold{background:linear-gradient(135deg,#d7b688,#bf8d5c);color:#301e18;box-shadow:var(--sombra)}
+
+    .hero{
+      position:relative;
+      padding:48px 0 38px;
+      isolation:isolate;
+    }
+    .hero::before{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(110deg,#291b16 0%,#3b2921 60%,#493328 100%);
+      z-index:-2;
+    }
+    /* Foto original da Casa Canelas preservada; apenas enquadramento responsivo. */
+    .hero__real-photo{
+      position:absolute;z-index:-1;right:0;top:0;bottom:0;width:49%;
+      background:url('images/casa-canelas-original.png') center 42% / cover no-repeat;
+    }
+    .hero__real-photo::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(90deg,#291b16 0%,rgba(41,27,22,.52) 20%,transparent 58%);
+    }
+    .hero::after{
+      content:"";position:absolute;inset:auto 0 0;height:130px;
+      background:linear-gradient(180deg, rgba(248,242,234,0) 0%, var(--marfim) 100%);
+      z-index:-1;
+    }
+    .hero__grid{
+      display:grid;grid-template-columns:1.15fr .85fr;gap:28px;align-items:end;
+      min-height:580px;
+    }
+    .hero__content{padding:52px 0 46px;color:#fffaf5;max-width:650px}
+    .eyebrow{display:inline-flex;align-items:center;gap:12px;text-transform:uppercase;font-weight:800;letter-spacing:.18em;font-size:.82rem;color:#f1d9be;margin-bottom:16px}
+    .eyebrow::before{content:"";width:52px;height:1px;background:currentColor;opacity:.75}
+    h1{font-family:"Cormorant Garamond",serif;font-size:clamp(3.4rem,8vw,6.4rem);line-height:.92;font-weight:700;letter-spacing:-.03em;margin-bottom:18px}
+    h1 span{color:#f0c28e}
+    .hero__content p{font-size:1.15rem;max-width:42ch;color:rgba(255,250,245,.92);margin-bottom:26px}
+    .hero__actions{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:34px}
+    .hero__info{display:flex;flex-wrap:wrap;gap:14px 24px;color:#f6e8db;font-size:.98rem}
+    .hero__info div{display:flex;align-items:center;gap:10px}
+    .hero__card{
+      justify-self:end;background:rgba(248,242,234,.92);color:var(--texto);
+      border:1px solid rgba(75,41,34,.08);padding:24px;border-radius:28px;box-shadow:var(--sombra);max-width:360px
+    }
+    .hero__card h2,.section__title{font-family:"Cormorant Garamond",serif;font-size:2.45rem;line-height:1.02;color:var(--vinho);margin-bottom:12px}
+    .hero__card p{color:var(--texto-2);margin-bottom:18px}
+    .hero__mini{display:grid;gap:14px}
+    .hero__mini article{background:rgba(255,255,255,.8);border-radius:18px;padding:14px 16px;border:1px solid rgba(75,41,34,.08)}
+    .hero__mini span{display:block;font-size:.8rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--terracota);margin-bottom:6px}
+
+    section{padding:86px 0}
+    .section__head{display:flex;align-items:end;justify-content:space-between;gap:22px;margin-bottom:34px;flex-wrap:wrap}
+    .section__lead{max-width:58ch;color:var(--texto-2)}
+
+    .about__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:30px;align-items:center}
+    .about__photo{
+      border-radius:32px;overflow:hidden;box-shadow:var(--sombra);
+      min-height:440px;background:url('https://images.unsplash.com/photo-1514933651103-005eec06c04b?auto=format&fit=crop&w=1200&q=80') center/cover;
+      position:relative
+    }
+    .about__seal{
+      position:absolute;right:24px;bottom:24px;background:rgba(248,242,234,.96);width:145px;height:145px;border-radius:50%;display:grid;place-items:center;text-align:center;padding:20px;border:8px solid rgba(255,255,255,.9);box-shadow:var(--sombra)
+    }
+    .about__seal b{display:block;font-family:"Cormorant Garamond",serif;font-size:2rem;color:var(--vinho);line-height:.9}
+    .about__seal span{display:block;letter-spacing:.16em;text-transform:uppercase;font-weight:800;font-size:.74rem;color:var(--texto)}
+    .about__text p{color:var(--texto-2);margin-bottom:18px}
+    .quote{margin:22px 0;padding-left:28px;border-left:3px solid #c6a07d;font-family:"Cormorant Garamond",serif;font-size:2rem;line-height:1.2;color:var(--vinho)}
+
+    .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .card{
+      background:#fff;border-radius:26px;padding:22px;border:1px solid rgba(75,41,34,.08);box-shadow:var(--sombra)
+    }
+    .card .icon{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,var(--areia),#f5ebde);font-size:1.35rem;margin-bottom:16px}
+    .card h3{font-size:1.08rem;margin-bottom:8px;color:var(--vinho)}
+    .card p{color:var(--texto-2);font-size:.96rem}
+
+    .menu-demo{background:linear-gradient(180deg,var(--areia) 0%, var(--marfim) 100%)}
+    .catalogue{
+      display:grid;grid-template-columns:300px 1fr;gap:26px;align-items:start
+    }
+    .catalogue__aside,.catalogue__main{background:#fff;border-radius:28px;border:1px solid rgba(75,41,34,.08);box-shadow:var(--sombra)}
+    .catalogue__aside{padding:22px;position:sticky;top:98px}
+    .catalogue__main{padding:22px}
+    .aside__logo{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+    .aside__logo .circle{width:66px;height:66px;border-radius:50%;background:linear-gradient(135deg,var(--terracota),var(--vinho));display:grid;place-items:center;color:#fff;font-family:"Cormorant Garamond",serif;font-size:1.95rem;font-weight:700}
+    .aside__logo strong{display:block;color:var(--vinho);font-size:1.12rem}
+    .aside__logo span{display:block;font-size:.92rem;color:var(--texto-2)}
+    .small-note{font-size:.92rem;color:var(--texto-2);margin-bottom:18px}
+    .search{width:100%;padding:15px 18px;border:1px solid rgba(75,41,34,.12);border-radius:16px;background:#fff;color:var(--texto);margin-bottom:16px}
+    .filters{display:flex;flex-direction:column;gap:10px}
+    .filter{padding:12px 15px;border:1px solid rgba(75,41,34,.1);background:#fff;border-radius:14px;text-align:left;font-weight:700;color:var(--texto);cursor:pointer;transition:var(--trans)}
+    .filter.active,.filter:hover{background:var(--vinho);color:#fff;border-color:var(--vinho)}
+    .products{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+    .item{background:#fffaf7;border:1px solid rgba(75,41,34,.08);border-radius:22px;overflow:hidden;display:flex;flex-direction:column;min-height:100%}
+    .item__photo{position:relative;aspect-ratio:4/2.7;overflow:hidden}
+    .item__photo img{width:100%;height:100%;object-fit:cover;transition:transform .6s ease}
+    .item:hover .item__photo img{transform:scale(1.05)}
+    .tag{position:absolute;left:14px;top:14px;background:rgba(48,30,24,.82);color:#fff;padding:7px 12px;border-radius:999px;font-size:.76rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase}
+    .item__body{padding:18px 18px 16px;display:flex;flex-direction:column;gap:10px;flex:1}
+    .item__body h3{font-size:1.12rem;color:var(--vinho)}
+    .item__body p{font-size:.96rem;color:var(--texto-2)}
+    .item__foot{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;padding-top:10px}
+    .price{font-weight:800;color:var(--vinho)}
+    .add{width:42px;height:42px;border-radius:50%;border:none;background:var(--terracota);color:#fff;font-size:1.35rem;font-weight:800;cursor:pointer;transition:var(--trans)}
+    .add:hover{transform:scale(1.05);background:var(--vinho)}
+
+    .highlights{background:#2d1a15;color:#f8f2ea}
+    .highlights .section__title,.highlights .eyebrow{color:#f8e1c2}
+    .highlights .section__lead{color:#dcc8bc}
+    .highlight-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+    .highlight{position:relative;min-height:380px;border-radius:30px;overflow:hidden;box-shadow:0 20px 40px rgba(0,0,0,.22)}
+    .highlight::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.08) 16%, rgba(0,0,0,.72) 100%), var(--bg) center/cover}
+    .highlight > div{position:absolute;inset:auto 22px 22px;z-index:1}
+    .highlight span{display:block;font-size:.78rem;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:#f4d6b2;margin-bottom:8px}
+    .highlight h3{font-family:"Cormorant Garamond",serif;color:#fff;font-size:2rem;line-height:1.02}
+
+    .contact__grid{display:grid;grid-template-columns:1fr 370px;gap:28px;align-items:start}
+    .contact__box{background:#fff;border-radius:28px;padding:24px;border:1px solid rgba(75,41,34,.08);box-shadow:var(--sombra)}
+    .contact__box p{color:var(--texto-2);margin-bottom:12px}
+    .contact__info{display:grid;gap:14px;margin-top:18px}
+    .contact__info div{padding:15px 17px;border-radius:18px;background:rgba(239,228,212,.56)}
+    .contact__info b{display:block;color:var(--vinho);margin-bottom:4px}
+
+    footer{background:#163127;color:#f4efe7;padding:26px 0}
+    .footer__wrap{display:grid;grid-template-columns:auto 1fr auto;gap:20px;align-items:center}
+    .footer__brand{display:flex;align-items:center;gap:14px}
+    .footer__mark{width:56px;height:56px;border-radius:50%;background:rgba(255,255,255,.08);display:grid;place-items:center;font-family:"Cormorant Garamond",serif;font-size:1.9rem;color:#edd9b8;border:1px solid rgba(237,217,184,.45)}
+    .footer__brand strong{display:block;font-size:1.14rem;color:#f2e2cb}
+    .footer__brand span{display:block;font-size:.9rem;color:#c9c6bf}
+    .footer__copy{max-width:640px;color:#d6d0c8}
+
+    .float{position:fixed;right:20px;bottom:20px;z-index:45;border:none;border-radius:999px;padding:16px 20px;background:var(--vinho);color:#fff;font-weight:800;box-shadow:0 20px 38px rgba(0,0,0,.18);cursor:pointer}
+    .float span{display:inline-grid;place-items:center;margin-left:10px;width:28px;height:28px;border-radius:50%;background:#fff;color:var(--vinho)}
+    .shade{position:fixed;inset:0;background:rgba(18,10,8,.48);backdrop-filter:blur(3px);display:none;z-index:55;padding:20px}
+    .shade.open{display:grid;place-items:end}
+    .drawer{width:min(100%,480px);max-height:min(85vh,760px);background:#fff;border-radius:28px 28px 0 0;padding:22px;overflow:auto;box-shadow:0 -24px 48px rgba(0,0,0,.2)}
+    .drawer__head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}
+    .drawer__head h3{font-size:1.4rem;color:var(--vinho)}
+    .close{border:none;background:transparent;font-size:2rem;line-height:1;cursor:pointer;color:var(--vinho)}
+    .selected{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;padding:14px 0;border-bottom:1px solid rgba(75,41,34,.1)}
+    .remove{border:none;background:#f3ebe4;color:var(--vinho);font-weight:800;padding:10px 14px;border-radius:12px;cursor:pointer}
+    .drawer__foot{padding-top:18px;display:grid;gap:14px}
+    .drawer__foot p{color:var(--texto-2);font-size:.95rem}
+
+    .fade{opacity:0;transform:translateY(16px);transition:.7s ease}
+    .fade.in{opacity:1;transform:none}
+
+    @media (max-width: 1080px){
+      .hero__grid,.about__grid,.catalogue,.contact__grid,.footer__wrap{grid-template-columns:1fr}
+      .hero__card{justify-self:start;max-width:100%}
+      .cards{grid-template-columns:repeat(2,1fr)}
+      .highlight-grid,.products{grid-template-columns:1fr 1fr}
+      .catalogue__aside{position:static}
+      .footer__wrap{gap:14px}
+    }
+    @media (max-width: 760px){
+      .topbar{font-size:.72rem;letter-spacing:.11em}
+      .nav{padding:12px 0;align-items:flex-start;flex-direction:column}
+      .menu{gap:16px;justify-content:flex-start}
+      .nav__cta{width:100%}
+      .nav__cta .btn{width:100%}
+      .hero{padding-top:24px}
+      .hero__grid{min-height:auto}
+      h1{font-size:clamp(2.8rem,16vw,4.8rem)}
+      .hero__actions,.hero__info{flex-direction:column;align-items:flex-start}
+      .cards,.highlight-grid,.products{grid-template-columns:1fr}
+      .section__head{margin-bottom:26px}
+      .about__photo{min-height:340px}
+      .about__seal{width:116px;height:116px;bottom:18px;right:18px}
+      .footer__wrap{grid-template-columns:1fr}
+      .float{right:14px;left:14px;bottom:14px;display:flex;justify-content:center}
+      .brand__text b{font-size:1.02rem}
+      .brand__mark,.footer__mark{width:48px;height:48px}
+    }
+
+    /* V2 — identidade visual do bistrô aplicada aos quatro selos circulares */
+    .brand__mark,.footer__mark,.aside__logo .circle,.about__seal {overflow:hidden;padding:0;flex-shrink:0}
+    .brand__mark img,.footer__mark img,.aside__logo .circle img,.about__seal img {
+       width:100%;height:100%;object-fit:cover;object-position:center;display:block;border-radius:50%;
+    }
+    .about__seal {border:6px solid rgba(255,255,255,.96);}
+    .about__seal img {object-fit:cover;}
+    /* Enquadramento da foto sem modificar o arquivo original. */
+    @media(max-width:760px){
+      .hero__real-photo{width:100%;height:64%;bottom:auto;background-position:center 34%;opacity:.48;}
+      .hero__real-photo::after{background:linear-gradient(180deg,rgba(41,27,22,.22),#291b16 94%);}
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">Demonstração personalizada · Maria da Pá Virada · não é canal oficial</div>
+
+  <header>
+    <div class="container nav">
+      <a href="#inicio" class="brand">
+        <div class="brand__mark"><img src="images/chef-retrato-recorte.png" alt="Retrato da chef do Maria da Pá Virada" /></div>
+        <div class="brand__text">
+          <b>Maria da Pá Virada</b>
+          <span>Bistrô · Alagoa Grande · PB</span>
+        </div>
+      </a>
+      <nav class="menu" aria-label="Navegação principal">
+        <a href="#inicio">Início</a>
+        <a href="#experiencia">A experiência</a>
+        <a href="#cardapio">Cardápio</a>
+        <a href="#destaques">Destaques</a>
+        <a href="#contato">Contato</a>
+      </nav>
+      <div class="nav__cta">
+        <a class="btn btn--gold" href="#cardapio">Ver proposta ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio"><div class="hero__real-photo" aria-hidden="true"></div>
+      <div class="container hero__grid">
+        <div class="hero__content fade">
+          <div class="eyebrow">Bistrô & experiências</div>
+          <h1>Maria da Pá <span>Virada</span></h1>
+          <p>Uma proposta de cardápio digital criada para valorizar a experiência do bistrô, facilitar o acesso pelo celular e apresentar melhor os pratos, bebidas e momentos especiais da casa.</p>
+          <div class="hero__actions">
+            <a class="btn btn--solid" href="#cardapio">Explorar cardápio</a>
+            <a class="btn btn--light" href="https://wa.me/558399175453?text=Ol%C3%A1!%20Vi%20a%20proposta%20de%20card%C3%A1pio%20digital%20do%20Maria%20da%20P%C3%A1%20Virada%20e%20gostaria%20de%20saber%20mais." target="_blank" rel="noopener">Falar no WhatsApp</a>
+          </div>
+          <div class="hero__info">
+            <div>● Almoço aos sábados e domingos</div>
+            <div>● Eventos e celebrações</div>
+            <div>● Hospedagem & jardim</div>
+          </div>
+        </div>
+        <aside class="hero__card fade">
+          <h2>Uma proposta com mais presença digital.</h2>
+          <p>Em vez de depender apenas de links soltos, stories ou mensagens, o cardápio pode ganhar um espaço visual mais organizado, bonito e fácil de navegar.</p>
+          <div class="hero__mini">
+            <article>
+              <span>Mais clareza</span>
+              <p>Melhor apresentação das opções da casa, com categorias, fotos e destaques.</p>
+            </article>
+            <article>
+              <span>Mais praticidade</span>
+              <p>Quem chega pelo Instagram acessa tudo em poucos toques, diretamente do celular.</p>
+            </article>
+            <article>
+              <span>Mais valor percebido</span>
+              <p>A experiência do bistrô fica mais alinhada com a identidade acolhedora e especial da marca.</p>
+            </article>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="experiencia">
+      <div class="container">
+        <div class="section__head">
+          <div>
+            <div class="eyebrow" style="color:#b6744e">A proposta</div>
+            <h2 class="section__title">Mais do que um cardápio, uma experiência visual.</h2>
+          </div>
+          <p class="section__lead">Esta página foi pensada para mostrar como o Maria da Pá Virada pode apresentar sua proposta gastronômica e de experiência de maneira mais elegante, intuitiva e convidativa.</p>
+        </div>
+        <div class="about__grid">
+          <div class="about__photo fade">
+            <div class="about__seal"><img src="images/chef-retrato-recorte.png" alt="Retrato da chef do bistrô" /></div>
+          </div>
+          <div class="about__text fade">
+            <p>A ideia desta demonstração é transformar a consulta ao cardápio em algo mais agradável, valorizando a identidade do bistrô e criando uma navegação mais clara para quem descobre a casa pelo Instagram ou WhatsApp.</p>
+            <p>Além da gastronomia, o ambiente, o jardim, a proposta de celebrações e até a hospedagem podem ganhar um espaço melhor organizado dentro da mesma experiência digital.</p>
+            <div class="quote">“Mais do que um restaurante, uma experiência.”</div>
+            <a class="btn btn--gold" href="#cardapio">Conhecer as opções ↗</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section__head">
+          <div>
+            <div class="eyebrow" style="color:#b6744e">Pontos fortes</div>
+            <h2 class="section__title">O que pode ganhar força nessa versão digital.</h2>
+          </div>
+          <p class="section__lead">A demonstração abaixo mostra como a proposta do Maria da Pá Virada pode ser organizada em uma apresentação mais profissional e comercial.</p>
+        </div>
+        <div class="cards">
+          <article class="card fade"><div class="icon">🍽️</div><h3>Almoço com destaque</h3><p>Os pratos podem ser apresentados por categorias, com descrições e mais apelo visual para o público.</p></article>
+          <article class="card fade"><div class="icon">📲</div><h3>Acesso fácil pelo celular</h3><p>O link pode ficar na bio do Instagram e facilitar a consulta sem depender de várias mensagens.</p></article>
+          <article class="card fade"><div class="icon">✨</div><h3>Mais valor à experiência</h3><p>Ambiente, celebrações e proposta da casa passam a ser percebidos de forma mais completa.</p></article>
+          <article class="card fade"><div class="icon">🏡</div><h3>Espaço para hospedagem</h3><p>Também é possível destacar chalé, experiências e diferenciais em uma mesma apresentação.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="menu-demo" id="cardapio">
+      <div class="container">
+        <div class="section__head">
+          <div>
+            <div class="eyebrow" style="color:#946741">Explore a proposta</div>
+            <h2 class="section__title">Cardápio digital demonstrativo.</h2>
+          </div>
+          <p class="section__lead">Os itens abaixo são ilustrativos e servem para demonstrar a estrutura da página. Produtos, fotos, nomes e valores podem ser ajustados com o conteúdo oficial do bistrô.</p>
+        </div>
+        <div class="catalogue">
+          <aside class="catalogue__aside fade">
+            <div class="aside__logo">
+              <div class="circle"><img src="images/chef-retrato-recorte.png" alt="Retrato da chef do Maria da Pá Virada" /></div>
+              <div>
+                <strong>Maria da Pá Virada</strong>
+                <span>Proposta de cardápio digital</span>
+              </div>
+            </div>
+            <p class="small-note">Escolha uma categoria, pesquise um item e monte uma lista de interesse. Esta demonstração não representa um pedido oficial.</p>
+            <input id="search" class="search" type="search" placeholder="Buscar um prato ou categoria..." aria-label="Buscar no cardápio" />
+            <div id="filters" class="filters"></div>
+          </aside>
+          <div class="catalogue__main fade">
+            <div id="products" class="products"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="highlights" id="destaques">
+      <div class="container">
+        <div class="section__head">
+          <div>
+            <div class="eyebrow">Destaques da apresentação</div>
+            <h2 class="section__title">Algumas possibilidades de vitrine.</h2>
+          </div>
+          <p class="section__lead">Uma seção como essa ajuda a evidenciar pratos, bebidas ou experiências que mereçam mais atenção dentro da página.</p>
+        </div>
+        <div class="highlight-grid">
+          <article class="highlight fade" style="--bg:url('https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80')"><div><span>Almoço de fim de semana</span><h3>Prato principal em destaque</h3></div></article>
+          <article class="highlight fade" style="--bg:url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80')"><div><span>Experiência da casa</span><h3>Ambiente, jardim e celebrações</h3></div></article>
+          <article class="highlight fade" style="--bg:url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80')"><div><span>Bebidas & café</span><h3>Momentos especiais da cafeteria</h3></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contato">
+      <div class="container contact__grid">
+        <div class="fade">
+          <div class="eyebrow" style="color:#b6744e">Contato</div>
+          <h2 class="section__title">Uma vitrine digital que pode crescer com a marca.</h2>
+          <p class="section__lead">Se a proposta fizer sentido, o conteúdo pode ser refinado com os produtos, fotos, valores e detalhes oficiais do Maria da Pá Virada.</p>
+          <div class="contact__info">
+            <div><b>Localização</b>Alagoa Grande · Paraíba</div>
+            <div><b>Atendimento</b>Sábados e domingos para almoço · demais dias por agendamento</div>
+            <div><b>Contato</b><a href="https://wa.me/558399175453" target="_blank" rel="noopener">+55 83 9917-5453</a></div>
+            <div><b>Instagram</b><a href="https://instagram.com/mariadapaviradabistro" target="_blank" rel="noopener">@mariadapaviradabistro</a></div>
+          </div>
+        </div>
+        <aside class="contact__box fade">
+          <h3 style="font-size:1.4rem;color:var(--vinho);margin-bottom:10px">Próximo passo</h3>
+          <p>Esta primeira versão foi pensada apenas para demonstrar o potencial da proposta.</p>
+          <p>Com o material oficial da casa, o site pode ser ajustado para representar com ainda mais fidelidade a identidade e o cardápio real do bistrô.</p>
+          <a class="btn btn--solid" href="https://wa.me/558399175453?text=Ol%C3%A1!%20Vi%20a%20demonstra%C3%A7%C3%A3o%20de%20card%C3%A1pio%20digital%20e%20gostaria%20de%20falar%20sobre%20a%20proposta." target="_blank" rel="noopener" style="width:100%;margin-top:8px">Abrir conversa no WhatsApp ↗</a>
+          <p style="font-size:.88rem;margin-top:10px">Protótipo independente para apresentação comercial. Não é um canal oficial do estabelecimento.</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer__wrap">
+      <div class="footer__brand">
+        <div class="footer__mark"><img src="images/chef-retrato-recorte.png" alt="Retrato da chef do Maria da Pá Virada" /></div>
+        <div>
+          <strong>Maria da Pá Virada</strong>
+          <span>Demonstração personalizada</span>
+        </div>
+      </div>
+      <div class="footer__copy">Protótipo independente para apresentação comercial. Conteúdo, fotos, nomes de itens e valores desta página são ilustrativos e podem ser ajustados com as informações oficiais do estabelecimento.</div>
+      <div>Alagoa Grande · PB</div>
+    </div>
+  </footer>
+
+  <button id="openList" class="float">Minha seleção <span id="counter">0</span></button>
+
+  <div id="shade" class="shade" role="dialog" aria-modal="true" aria-label="Minha seleção">
+    <div class="drawer">
+      <div class="drawer__head">
+        <h3>Minha seleção</h3>
+        <button id="closeList" class="close" aria-label="Fechar">×</button>
+      </div>
+      <div id="selected"></div>
+      <div class="drawer__foot">
+        <p>Essa lista apenas demonstra como o visitante poderia salvar interesse em alguns itens antes de chamar a equipe no WhatsApp.</p>
+        <button id="sendList" class="btn btn--gold">Consultar itens no WhatsApp ↗</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const ITEMS = [
+      {id:1, category:'Entradas', name:'Bruschetta artesanal', description:'Sugestão visual para destacar entradas e petiscos da casa.', price:'Valor a confirmar', image:'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=900&q=80'},
+      {id:2, category:'Entradas', name:'Dadinhos de tapioca', description:'Exemplo de item para a seção de entradas.', price:'Valor a confirmar', image:'https://images.unsplash.com/photo-1473093295043-cdd812d0e601?auto=format&fit=crop&w=900&q=80'},
+      {id:3, category:'Pratos principais', name:'Almoço especial da casa', description:'Opção demonstrativa para o almoço de fim de semana.', price:'Valor a confirmar', image:'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=900&q=80'},
+      {id:4, category:'Pratos principais', name:'Filé com acompanhamentos', description:'Exemplo ilustrativo para valorizar pratos principais.', price:'Valor a confirmar', image:'https://images.unsplash.com/photo-1559847844-5315695dadae?auto=format&fit=crop&w=900&q=80'},
+      {id:5, category:'Pratos principais', name:'Massa artesanal', description:'Uma sugestão de apresentação para pratos especiais.', price:'Valor a confirmar', image:'https://images.unsplash.com/photo-1555949258-eb67b1ef0ceb?auto=format&fit=crop&w=900&q=80'},
+      {id:6, category:'Sobremesas', name:'Torta da casa', description:'Exemplo de sobremesa com apresentação delicada.', price:'Valor a confirmar', image:'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=900&q=80'},
+      {id:7, category:'Sobremesas', name:'Brownie com sorvete', description:'Sugestão visual para o espaço de sobremesas.', price:'Valor a confirmar', image:'https://images.unsplash.com/photo-1563805042-7684c019e1cb?auto=format&fit=crop&w=900&q=80'},
+      {id:8, category:'Bebidas', name:'Café especial', description:'Área ideal para cafés, bebidas autorais e combinações da casa.', price:'Valor a confirmar', image:'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80'},
+      {id:9, category:'Bebidas', name:'Suco natural da estação', description:'Exemplo de bebida leve e fresca.', price:'Valor a confirmar', image:'https://images.unsplash.com/photo-1622597467836-f3285f2131b8?auto=format&fit=crop&w=900&q=80'},
+      {id:10, category:'Bebidas', name:'Drinque da casa', description:'Espaço demonstrativo para drinks e bebidas especiais.', price:'Valor a confirmar', image:'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?auto=format&fit=crop&w=900&q=80'},
+      {id:11, category:'Experiências', name:'Celebrações e eventos', description:'Bloco extra para reforçar experiências além do cardápio.', price:'Sob consulta', image:'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80'},
+      {id:12, category:'Experiências', name:'Hospedagem / chalé', description:'Também pode ganhar um espaço visual dentro da mesma proposta.', price:'Sob consulta', image:'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80'}
+    ];
+
+    const categories = ['Todos', ...new Set(ITEMS.map(item => item.category))];
+    let currentCategory = 'Todos';
+    let search = '';
+    let selected = [];
+
+    const $ = id => document.getElementById(id);
+
+    function renderFilters(){
+      $('filters').innerHTML = categories.map(cat => `
+        <button class="filter ${cat === currentCategory ? 'active' : ''}" data-filter="${cat}">${cat}</button>
+      `).join('');
+    }
+
+    function renderProducts(){
+      const filtered = ITEMS.filter(item => (currentCategory === 'Todos' || item.category === currentCategory) && (`${item.name} ${item.description} ${item.category}`).toLowerCase().includes(search));
+      $('products').innerHTML = filtered.length ? filtered.map(item => `
+        <article class="item fade in">
+          <div class="item__photo">
+            <img src="${item.image}" alt="Imagem ilustrativa de ${item.name}" loading="lazy">
+            <span class="tag">${item.category}</span>
+          </div>
+          <div class="item__body">
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <div class="item__foot">
+              <span class="price">${item.price}</span>
+              <button class="add" data-add="${item.id}" aria-label="Adicionar ${item.name}">+</button>
+            </div>
+          </div>
+        </article>
+      `).join('') : '<p style="color:#6a5a52">Nenhum item encontrado nessa busca.</p>';
+    }
+
+    function renderSelected(){
+      const countMap = {};
+      selected.forEach(id => countMap[id] = (countMap[id] || 0) + 1);
+      $('counter').textContent = selected.length;
+      $('selected').innerHTML = Object.keys(countMap).length ? Object.entries(countMap).map(([id, qty]) => {
+        const item = ITEMS.find(x => x.id == id);
+        return `
+          <div class="selected">
+            <div>
+              <strong style="display:block;color:#4b2922">${item.name}</strong>
+              <span style="display:block;color:#6a5a52;font-size:.92rem;margin-top:6px">Quantidade: ${qty} · ${item.price}</span>
+            </div>
+            <button class="remove" data-remove="${id}">Remover</button>
+          </div>
+        `;
+      }).join('') : '<p style="color:#6a5a52">Nenhum item foi adicionado ainda.</p>';
+    }
+
+    $('filters').addEventListener('click', (e) => {
+      const button = e.target.closest('[data-filter]');
+      if(!button) return;
+      currentCategory = button.dataset.filter;
+      renderFilters();
+      renderProducts();
+    });
+
+    $('products').addEventListener('click', (e) => {
+      const button = e.target.closest('[data-add]');
+      if(!button) return;
+      selected.push(Number(button.dataset.add));
+      renderSelected();
+      button.textContent = '✓';
+      setTimeout(() => button.textContent = '+', 700);
+    });
+
+    $('selected').addEventListener('click', (e) => {
+      const button = e.target.closest('[data-remove]');
+      if(!button) return;
+      const id = Number(button.dataset.remove);
+      const index = selected.indexOf(id);
+      if(index > -1) selected.splice(index, 1);
+      renderSelected();
+    });
+
+    $('search').addEventListener('input', (e) => {
+      search = e.target.value.toLowerCase().trim();
+      renderProducts();
+    });
+
+    $('openList').addEventListener('click', () => $('shade').classList.add('open'));
+    $('closeList').addEventListener('click', () => $('shade').classList.remove('open'));
+    $('shade').addEventListener('click', (e) => { if(e.target.id === 'shade') $('shade').classList.remove('open'); });
+    document.addEventListener('keydown', (e) => { if(e.key === 'Escape') $('shade').classList.remove('open'); });
+
+    $('sendList').addEventListener('click', () => {
+      const countMap = {};
+      selected.forEach(id => countMap[id] = (countMap[id] || 0) + 1);
+      const lines = Object.entries(countMap).map(([id, qty]) => `- ${qty}x ${ITEMS.find(x => x.id == id).name}`);
+      const text = lines.length
+        ? `Olá! Vi a demonstração do cardápio digital do Maria da Pá Virada e gostaria de consultar estes itens:\n${lines.join('\n')}`
+        : 'Olá! Vi a demonstração do cardápio digital do Maria da Pá Virada e gostaria de saber mais sobre a proposta.';
+      window.open(`https://wa.me/558399175453?text=${encodeURIComponent(text)}`, '_blank', 'noopener,noreferrer');
+    });
+
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          observer.unobserve(entry.target);
+        }
+      })
+    }, {threshold: .12});
+
+    document.querySelectorAll('.fade').forEach(el => observer.observe(el));
+    renderFilters();
+    renderProducts();
+    renderSelected();
+  </script>
+</body>
+</html>
